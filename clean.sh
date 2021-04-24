@@ -5,3 +5,4 @@ do
 rm test$i
 rm data$i/result.txt
 done
+rm ./a.out

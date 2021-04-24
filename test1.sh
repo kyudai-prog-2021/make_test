@@ -8,8 +8,6 @@ $input
 EOF
 }
 
-git log --oneline -n 1 | cut -d ' ' -f 1  >>log.txt
-
 echo $(func)> ./data1/result.txt
 check=`diff ./data1/output.txt ./data1/result.txt`
 
