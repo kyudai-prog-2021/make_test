@@ -8,8 +8,10 @@ $input
 EOF
 }
 
-
-echo $(func)> ./data2/result.txt
+result=`func`
+echo $result>./data2/result1.txt
+cat ./data2/result1.txt | tr ' ' '\n'>data2/result.txt
+rm data2/result1.txt
 check=`diff ./data2/output.txt ./data2/result.txt`
 
 if test $check -z
