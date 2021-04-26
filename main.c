@@ -3,25 +3,45 @@
 
 int main()
 {
-    int i, n;
-    double ip = 0.0;
-    double u[3];
-    double v[3];
+    int i, j, k;
+    float answer;
+    float a[3][3], b[3][3], c[3][3];
     
+    for(i=0; i<3; i++){
+        for(j=0; j<3; j++){
+                scanf("%f", &a[i][j]);
+        }
+    }
     
     for(i=0; i<3; ++i){
-        scanf("%lf", &u[i]);
+        for(j=0; j<3; ++j){
+                scanf("%f", &b[i][j]);
+        }
     }
     
-        
+    //行列の積
     for(i=0; i<3; ++i){
-        scanf("%lf", &v[i]);
+        for(j=0; j<3; ++j){
+            c[i][j] = a[i][j]*b[i][j];
+            
+            for(i=0; i<3; ++i){
+                for(j=0; j<3; ++j){
+                    answer = 0;
+                    for (k=0; k<3; ++k){
+                        answer = answer + a[i][k]*b[k][j];
+                        c[i][j] = answer;
+                    }
+                }
+            }
+        }
     }
     
-    for (i=0; i<3; i++){
-        ip = ip + u[i]*v[i];
+    for(i=0; i<3; ++i){
+        for(j=0; j<3; ++j){
+            printf("%f\n",c[i][j]);
+        }
     }
-    printf("%lf\n", ip);
     
     return 0;
 }
+
