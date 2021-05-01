@@ -1,13 +1,25 @@
 #include <stdio.h>
-#include <string.h>
-int main(){
-    char x[100], y[100];
-    int i;
-    scanf("%s", x);
-    for(i=0; i<strlen(x); i++){
-       y[i]=x[strlen(x)-i-1]; 
+
+int main()
+{
+    int i, n;
+    scanf("%d" ,&n);
+
+    float a[n];
+    float sum, sum2, ave, dis;
+    
+    sum = 0.0;
+    sum2 = 0,0;
+    for (i = 0; i < n; i++)
+    {
+        scanf("%f" , &a[i]);
+        sum += a[i];
+        sum2 += a[i]*a[i];
     }
-    y[strlen(x)]='\0';
-    strcat(x,y);
-    printf("%s",x);
+    ave = sum / n;
+    dis = (sum2 / n) - (ave * ave);
+    printf("%.3f\n" , ave);
+    printf("%.3f\n" , dis);
+    
+    return 0;
 }
