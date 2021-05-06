@@ -2,28 +2,36 @@
 #include<math.h>
 
 /* f(x) */
-double f(double x)
-{
-    return exp(-x*x);
+void bubble(int a[],int left,int right){
+    int i, j, tmp;
+    for(i = left; i < right - 1; i++){
+        for(j = i + 1; j < right; j++){
+            /* もしもa[j]がa[i]より小さいならばa[i]とa[j]を入れ替える */
+            if(a[j] < a[i]){
+                tmp = a[j];
+                a[j] = a[i];
+                a[i] = tmp;
+            }
+        }
+    }
 }
 
 int main()
 {
-    double a, b, x, h, sum = 0.0;
-    int n, i;
+    int N, i;
 
-    //積分区間
-    scanf("%lf %lf", &a, &b);
-    //分割数
-    scanf("%d", &n);
+    //要素数
+    scanf("%d", &N);
+    int a[N];
 
-    // 台形の面積の計算
-    h = (b-a)/n;
-    for (i=0; i<n; i++) {	
-        x = a + (double)i*h;
-        sum += (h/2)*(f(x) + f(x+h));
+    //入力データを配列a[N]に格納
+    for(i=0;i<N;i++){
+        scanf("%d",&a[i]);
     }
 
-    printf("%lf\n",sum);
-
+    bubble(a,0,N);
+    //ソート結果を出力
+    for(i=0;i<N;i++){
+        printf("%d\n",a[i]);
+    }
 }
