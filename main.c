@@ -1,53 +1,59 @@
 #include <stdio.h>
+#include <math.h>
 
-void bubble(int a[],int left,int right){
-    int i, j, tmp;
-    for(i = left; i < right - 1; i++){
-        for(j = i + 1; j < right; j++){
-            /* もしもa[j]がa[i]より小さいならばa[i]とa[j]を入れ替える */
-            if(a[j] < a[i]){
-                tmp = a[j];
-                a[j] = a[i];
-                a[i] = tmp;
-            }
-        }
-    }
+/*f(x)*/
+double f(double x,double a,double b,double c)
+{
+    return a * pow(x,2) + b * x + c;
 }
 
-void mergesort(int a[], int left, int right,int N){
-    int mid,i,j,k,tmp[N];
-    if (left >= right) return;
-    if (right-left<32){
-        bubble(a,left,right+1);//bubbleのrightは配列の終端より一つ右を指すので，ここで1を加えて補正
-    }
-    else{
-        //要素を分解
-        mid = (left+right)/2;
-        mergesort(a,left,mid,N);
-        mergesort(a,mid+1,right,N);
-
-        //要素を統合
-        for(i=left;i<=mid;i++) tmp[i]=a[i];
-        for(j=mid+1;j<=right;j++) tmp[right-(j-(mid+1))]=a[j];
-        i=left;
-        j=right;
-        for(k=left;k<=right;k++){
-            if(tmp[i]<tmp[j]) a[k]=tmp[i++];
-            else a[k] = tmp[j--];
-        }
-    }
+/*f(x)の導関数*/
+double g(double x,double a,double b)
+{
+    return 2 * a * x + b;
 }
 
-int main(){
-    int N,i;
-    scanf("%d",&N);
-    int a[N];
+int main()
+{
+    //利用する変数
+    double x, new_x, eps;
+    int number,i;
+    double a,b,c;
 
-    //入力の取り込み
-    for(i=0;i<N;i++)scanf("%d",&a[i]);
+    //fxの取り込み
+    //printf("a : ");
+    scanf("%lf",&a);
+    //printf("b : ");
+    scanf("%lf",&b);
+    //printf("c : ");
+    scanf("%lf",&c);
 
-    mergesort(a,0,N-1,N);
+    //データの取り込み
+    //printf("初期値 : ");
+    scanf("%lf",&x);
+    //printf("計算精度 : ");
+    scanf("%lf",&eps);
+    //printf("繰り返し上限回数 : ");
+    scanf("%d",&number);
+    //printf("繰り返し\tnew x\t\tf(x)\t\tg(x)\n");
+    
+    /* ニュートン法による解の導出 */
+    for(i=0;i<number;i++){
+        new_x = x - f(x,a,b,c) / g(x,a,b);
+        /* 収束条件で判定し、解を出力 */
+        if(fabs(new_x - x) < eps && (g(x,a,b) > 0.0001)){
+            printf("%f\n", new_x);
+            break;
+        }
 
-    //出力の取り込み
-    for(i=0;i<N;i++) printf("%d\n",a[i]);
+        //printf("%2d\t\t%f\t%f\t%f\n", i, new_x, f(x,a,b,c), g(x,a,b));
+
+         /* 収束条件、重解の判定をし、重解を出力 */
+        if((fabs(new_x - x) < eps) && (g(x,a,b) <= 0.0001)){
+            printf("%f(重解)\n", new_x);
+            break;
+        }
+        x = new_x;
+    }
+    if(i == number) printf("繰り返し上限\n");
 }
